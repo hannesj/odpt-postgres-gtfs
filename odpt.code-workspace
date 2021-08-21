@@ -1,0 +1,49 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"deno.enable": true,
+		"deno.lint": true,
+		"deno.unstable": true,
+		"deno.suggest.imports.hosts": {
+			"https://deno.land": true
+		},
+		"sqltools.connections": [
+			{
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 5432,
+				"driver": "PostgreSQL",
+				"name": "odpt",
+				"database": "postgres",
+				"username": "hannes",
+				"password": ""
+			}
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+
+			{
+				"request": "launch",
+				"name": "Launch Generate Timetables",
+				"type": "pwa-node",
+				"program": "${workspaceFolder}/odpt-improvement/generateTraintimetables.ts",
+				"cwd": "${workspaceFolder}",
+				"runtimeExecutable": "deno",
+				"runtimeArgs": [
+					"run",
+					"--unstable",
+					"--inspect",
+					"--allow-all"
+				],
+				"attachSimplePort": 9229,
+				"customDescriptionGenerator": "this.inspect ? this.inspect() : defaultValue"
+			}
+		]
+	}
+}
