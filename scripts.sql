@@ -136,6 +136,7 @@ where tt0.departure_station = 'Keikyu.Airport.HanedaAirportTerminal1and2'
 -- @block
 delete from odpt.train_timetable_object tt
 where tt.train_timetable like '%Generated%';
+-- @block
 delete from odpt.train_timetable tt
 where tt.id like '%Generated%';
 -- @block
@@ -147,10 +148,13 @@ select *
 from odpt.train_timetable tt
 where tt.id like '%Generated%';
 -- @block
-select s.translations->'en' as name,
-  ST_Y(location::geometry) as lat,
-  ST_X(location::geometry) as lon,
-  passengers
+select 
+  s.title as name,
+  s.translations->'en' as name_en,
+  s.translations->'en' as "name:latin",
+  s.title as "name:nonlatin",
+  ST_AsEWKT(ST_Centroid(ST_Union(location::geometry))),
+  sum(passengers)
 from (
     select station [1] as station,
       (
@@ -162,7 +166,9 @@ from (
     from odpt.passenger_survey
   ) as i
   join odpt.station s on s.id = station
-where passengers > 25000;
+  group by s.title, s.translations->'en'
+  --having ST_Area(ST_MinimumBoundingCircle(ST_Union(location::geometry))) < 0.0001
+  order by sum(passengers);
 -- @block
 select st.station,
   st.rail_direction,
@@ -207,9 +213,9 @@ select connecting_railway from odpt.station where id like 'Tokyu.DenEnToshi.Mizo
 select *
 from odpt.station_timetable_object sto
 where
---station_timetable like 'Keisei.NaritaSkyAccess.%.Outbound.%'
-  destination_station = '{Keisei.Oshiage.Aoto}'
-  and train_type = 'Keikyu.AirportRapidLimitedExpress'
+station_timetable like 'Keisei.Main.Aoto.Outbound.SaturdayHoliday'
+--  destination_station = '{Keisei.Oshiage.Aoto}'
+--  and train_type = 'Keikyu.AirportRapidLimitedExpress'
   order by station_timetable, departure_time
 
 -- @block
@@ -255,4 +261,79 @@ where tt.calendar = 'SaturdayHoliday'
   and tto.departure_time > '22:09'
 order by abs(tto.departure_time - '22:16')
 
+-- @block
 
+select * 
+FROM odpt.train_timetable_object
+where train_timetable in (
+  'JR-East.Musashino.2753M.Weekday',
+  'JR-East.ShonanShinjuku.2753M.Weekday',
+  'JR-East.Musashino.903E.Weekday',
+  'JR-East.Keiyo.903E.Weekday'
+);
+-- @block
+
+select tto.*
+FROM odpt.train_timetable tt
+LEFT JOIN odpt.train_type on tt.train_type = odpt.train_type.id
+LEFT JOIN odpt.rail_direction rd on tt.rail_direction = rd.id
+LEFT JOIN odpt.railway r on tt.railway = r.id
+LEFT JOIN odpt.train_timetable_object tto 
+  on tt.id = tto.train_timetable and (
+    COALESCE(tto.arrival_station, tto.departure_station) not LIKE (r.id || '.%') or
+    COALESCE(tto.arrival_station, tto.departure_station) = 'JR-East.Keiyo.NishiFunabashi'
+  )
+where tt.id = 'JR-East.Joban.14M.SaturdayHoliday'
+
+-- @block
+  select 
+    coalesce(tto.departure_station, tto.arrival_station) as station, 
+    train_type, 
+    destination_station, 
+    calendar,
+    coalesce(departure_time, arrival_time) as time
+  from odpt.train_timetable tt
+  inner join odpt.train_timetable_max_index maxindex on tt.id = maxindex.id
+  inner join odpt.train_timetable_object tto on tto.train_timetable = tt.id and maxindex.i = tto.i
+  where destination_station[1] != coalesce(tto.departure_station, tto.arrival_station)
+  and next_train_timetable is null
+  order by coalesce(departure_time, arrival_time) desc
+
+-- @block
+
+select *
+from odpt.train_timetable tt
+inner join odpt.train_timetable_object tto on tto.train_timetable = tt.id
+where tt.destination_station = '{SaitamaRailway.SaitamaRailway.UrawaMisono}'
+  and coalesce(tto.departure_station, tto.arrival_station) = 'Tokyu.DenEnToshi.Shibuya'
+  and tt.calendar = 'Weekday'
+  and previous_train_timetable is null
+  and (origin_station is null or origin_station[1] != 'Tokyu.DenEnToshi.Shibuya')
+  and coalesce(departure_time, arrival_time) >= '13:00:00'
+order by coalesce(departure_time, arrival_time) asc
+
+-- @block
+
+select coalesce(tto.departure_station, tto.arrival_station), tt.railway, count(1)
+from odpt.train_timetable tt
+inner join odpt.train_timetable_object tto on tto.train_timetable = tt.id
+inner join odpt.station s on coalesce(tto.departure_station, tto.arrival_station) = s.id
+where tt.railway != s.railway
+group by coalesce(tto.departure_station, tto.arrival_station), tt.railway
+
+-- @block
+
+select distinct * from gtfs.shapes ORDER BY shape_id, shape_pt_sequence;
+
+-- @block
+
+select * 
+from odpt.train_timetable_object tto
+inner join odpt.train_timetable tt on tto.train_timetable = tt.id
+where departure_station = 'TokyoMetro.Yurakucho.Iidabashi'
+  and tt.destination_station = '{Seibu.Ikebukuro.Kotesashi}'
+order by departure_time
+
+-- @block
+
+select * from odpt.busroute_pattern

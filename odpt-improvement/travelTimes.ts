@@ -236,6 +236,10 @@ export const staticTravelTimes: {[from: string]: {[to: string]: {[trainType: str
     "Keio.Sagamihara.KeioNagayama": {"Keio.KeioLiner": 27 * 60},
     "Keio.Takao.Takaosanguchi": {"Keio.KeioLiner": 49 * 60}
   },
+  "Keio.Keio.Meidaimae":{ 
+    "Keio.Sagamihara.KeioNagayama": {"Keio.KeioLiner": 19 * 60},
+    "Keio.Takao.Takaosanguchi": {"Keio.KeioLiner": 44 * 60}
+  },
   "Keio.Sagamihara.KeioNagayama": {"Keio.Keio.Shinjuku": {"Keio.KeioLiner": 30 * 60}},
   "Keisei.HigashiNarita.KeiseiNarita": {"Keisei.HigashiNarita.HigashiNarita": {
     "Keisei.Local": 6 * 60, "Keisei.Rapid": 6 * 60, "Keisei.LimitedExpress": 6 * 60, 
@@ -252,6 +256,7 @@ export const staticTravelTimes: {[from: string]: {[to: string]: {[trainType: str
   },
   "Keisei.NaritaSkyAccess.NaritaAirportTerminal2and3": {"Keisei.Main.Nippori": {"Keisei.Skyliner": 38 * 60}},
   "Keisei.Main.Aoto": {"Keisei.NaritaSkyAccess.NaritaAirportTerminal2and3": {"Keisei.Skyliner": 29 * 60}},
+  "Keisei.Main.KeiseiNarita": {"Keisei.Main.NaritaAirportTerminal1": {"Keisei.Eveningliner": 10 * 60}},
   "Keisei.Main.Nippori": {"Keisei.NaritaSkyAccess.NaritaAirportTerminal2and3": {"Keisei.Skyliner": 37 * 60}},
   "Keisei.Oshiage.Aoto": {"Keisei.Oshiage.Oshiage": {
     "Keisei.RapidLimitedExpress": 7 * 60,

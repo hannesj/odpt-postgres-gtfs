@@ -1,4 +1,109 @@
 export const finalConnections: Record<string, Record<string, Record<string, string | null>>> = {
+  "JR-East.ChuoRapid.Kunitachi": {
+    "JR-East.Local": {
+      "JR-East.ChuoRapid.Hachioji": "JR-East.ChuoRapid.Kunitachi"
+    }
+  },
+  "JR-East.ChuoRapid.Takao": {
+    "JR-East.ChuoSpecialRapid": {
+      "JR-East.Chuo.Otsuki": null,
+      "Fujikyu.Fujikyu.Kawaguchiko": null
+    },
+    "JR-East.Rapid": {
+      "JR-East.Chuo.Otsuki": null
+    },
+    "JR-East.CommuterRapid": {
+      "JR-East.Chuo.Otsuki": null,
+      "Fujikyu.Fujikyu.Kawaguchiko": null
+    }
+  },
+  "JR-East.ChuoSobuLocal.Kinshicho": {
+    "JR-East.LimitedExpress": {
+      "Fujikyu.Fujikyu.Kawaguchiko": null
+    }
+  },
+  "JR-East.Ito.Ito": {
+    "JR-East.Local": {
+      "Izukyu.Izukyu.IzukyuShimoda": null,
+      "Izukyu.Izukyu.Izukogen": null
+    },
+    "JR-East.LimitedExpress": {
+      "Izukyu.Izukyu.IzukyuShimoda": null
+    }
+  },
+  "JR-East.Joban.Mito": {
+    "JR-East.Local": {
+      "JR-East.Mito.Oyama": null
+    }
+  },
+  "JR-East.Joban.Sakamoto": {
+    "JR-East.Local": {
+      "JR-East.Joban.Sendai": null,
+      "JR-East.Tohoku.Rifu": null
+    }
+  },
+  "JR-East.Joban.Soma": {
+    "JR-East.LimitedExpress": {
+      "JR-East.Joban.Sendai": null
+    }
+  },
+  "JR-East.SaikyoKawagoe.Shinjuku": {
+    "JR-East.Local": {
+      "JR-East.SaikyoKawagoe.Ikebukuro": "JR-East.SaikyoKawagoe.Shinjuku"
+    }
+  },
+  "JR-East.SaikyoKawagoe.Osaki": {
+    "JR-East.Local": {
+      "TWR.Rinkai.ShinKiba": "TWR.Rinkai.Osaki"
+    },
+    "JR-East.Rapid": {
+      "TWR.Rinkai.ShinKiba": "TWR.Rinkai.Osaki"
+    },
+    "JR-East.CommuterRapid": {
+      "TWR.Rinkai.ShinKiba": "TWR.Rinkai.Osaki"
+    }
+  },
+  "JR-East.ShonanShinjuku.Omiya": {
+    "JR-East.LimitedExpress": {
+      "Tobu.Kinugawa.KinugawaOnsen": null,
+      "Tobu.Nikko.TobuNikko": null
+    }
+  },
+  "JR-East.ShonanShinjuku.Shinjuku": {
+    "JR-East.LimitedExpress": {
+      "JR-East.ChuoRapid.Hachioji": "JR-East.ChuoRapid.Shinjuku"
+    }
+  },
+  "JR-East.Sotobo.AwaKamogawa": {
+    "JR-East.Local": {
+      "JR-East.Uchibo.Kisarazu": "JR-East.Uchibo.AwaKamogawa"
+    }
+  },
+  "JR-East.Takasaki.Takasaki": {
+    "JR-East.Rapid": {
+      "JR-East.Ryomo.Maebashi": null
+    },
+    "JR-East.Local": {
+      "JR-East.Ryomo.Maebashi": null,
+      "JR-East.Ryomo.ShimMaebashi": null
+    },
+    "JR-East.LimitedExpress": {
+      "JR-East.Agatsuma.Naganoharakusatsuguchi": null
+    }
+  },
+  "JR-East.Tokaido.Atami": {
+    "JR-East.Local": {
+      "JR-Central.Tokaido.Numazu": null
+    },
+    "JR-East.LimitedExpress": {
+      "JR-West.Sanin.Izumoshi/JR-Shikoku.SetoOhashi.Takamatsu": null
+    }
+  },
+  "JR-East.Utsunomiya.Utsunomiya": {
+    "JR-East.Local": {
+      "JR-East.Nikko.Nikko": null
+    }
+  },
   "Keikyu.Airport.KeikyuKamata": {
     "Keikyu.AirportExpress": {
       "Hokuso.Hokuso.ImbaNihonIdai": "Keikyu.Main.KeikyuKamata",
@@ -588,14 +693,305 @@ export const finalConnections: Record<string, Record<string, Record<string, stri
       "Seibu.Haijima.Haijima": "Seibu.Haijima.Kodaira"
     }
   },
+  "Toei.Asakusa.Oshiage": {
+    "Toei.Local": {
+      "Keisei.Main.KeiseiTakasago": "Keisei.Oshiage.Oshiage",
+      "Hokuso.Hokuso.ImbaNihonIdai": "Keisei.Oshiage.Oshiage",
+      "Hokuso.Hokuso.InzaiMakinohara": "Keisei.Oshiage.Oshiage",
+      "Keisei.Oshiage.Aoto": "Keisei.Oshiage.Oshiage"
+    },
+    "Toei.RapidLimitedExpress": {
+      "Keisei.Main.KeiseiNarita": "Keisei.Oshiage.Oshiage",
+      "Keisei.Main.NaritaAirportTerminal1": "Keisei.Oshiage.Oshiage",
+      "Shibayama.Shibayama.ShibayamaChiyoda": "Keisei.Oshiage.Oshiage"
+    },
+    "Toei.LimitedExpress": {
+      "Hokuso.Hokuso.ImbaNihonIdai": "Keisei.Oshiage.Oshiage",
+      "Keisei.Main.KeiseiNarita": "Keisei.Oshiage.Oshiage",
+      "Keisei.Main.NaritaAirportTerminal1": "Keisei.Oshiage.Oshiage"
+    },
+    "Toei.CommuterLimitedExpress": {
+      "Keisei.Main.KeiseiNarita": "Keisei.Oshiage.Oshiage",
+      "Keisei.Main.NaritaAirportTerminal1": "Keisei.Oshiage.Oshiage",
+      "Shibayama.Shibayama.ShibayamaChiyoda": "Keisei.Oshiage.Oshiage"
+    },
+    "Toei.AirportRapidLimitedExpress": {
+      "Keisei.Main.KeiseiNarita": "Keisei.Oshiage.Oshiage",
+      "Keisei.Main.NaritaAirportTerminal1": "Keisei.Oshiage.Oshiage",
+      "Shibayama.Shibayama.ShibayamaChiyoda": "Keisei.Oshiage.Oshiage",
+      "Keisei.NaritaSkyAccess.NaritaAirportTerminal1": "Keisei.Oshiage.Oshiage",
+      "Keisei.Oshiage.Aoto": "Keisei.Oshiage.Oshiage",
+      "Keisei.Main.KeiseiTakasago": "Keisei.Oshiage.Oshiage"
+    },
+    "Toei.AccessExpress": {
+      "Keisei.NaritaSkyAccess.NaritaAirportTerminal1": "Keisei.Oshiage.Oshiage"
+    },
+    "Toei.Rapid": {
+      "Keisei.Main.NaritaAirportTerminal1": "Keisei.Oshiage.Oshiage",
+      "Keisei.Main.KeiseiNarita": "Keisei.Oshiage.Oshiage",
+      "Keisei.Main.KeiseiSakura": "Keisei.Oshiage.Oshiage"
+    }
+  },
+  "Toei.Asakusa.Sengakuji": {
+    "Toei.Local": {
+      "Keikyu.Main.Shinagawa": "Keikyu.Main.Sengakuji"
+    },
+    "Toei.LimitedExpress": {
+      "Keikyu.Main.KanazawaBunko": "Keikyu.Main.Sengakuji",
+      "Keikyu.Main.KanagawaShimmachi": "Keikyu.Main.Sengakuji",
+      "Keikyu.Kurihama.KeikyuKurihama": "Keikyu.Main.Sengakuji",
+      "Keikyu.Kurihama.Miurakaigan": "Keikyu.Main.Sengakuji",
+      "Keikyu.Kurihama.Misakiguchi": "Keikyu.Main.Sengakuji"
+    },
+    "Toei.Express": {
+      "Keikyu.Airport.HanedaAirportTerminal1and2": "Keikyu.Main.Sengakuji"
+    },
+    "Toei.RapidLimitedExpress": {
+      "Keikyu.Kurihama.KeikyuKurihama": "Keikyu.Main.Sengakuji",
+      "Keikyu.Kurihama.Misakiguchi": "Keikyu.Main.Sengakuji",
+      "Keikyu.Airport.HanedaAirportTerminal1and2": "Keikyu.Main.Sengakuji"
+    },
+    "Toei.AirportRapidLimitedExpress": {
+      "Keikyu.Airport.HanedaAirportTerminal1and2": "Keikyu.Main.Sengakuji"
+    }
+  },
+  "Toei.Mita.Meguro": {
+    "Toei.Local": {
+      "Tokyu.Meguro.MusashiKosugi": "Tokyu.Meguro.Meguro",
+      "Tokyu.Meguro.Hiyoshi": "Tokyu.Meguro.Meguro",
+    },
+    "Toei.Express": {
+      "Tokyu.Meguro.Hiyoshi": "Tokyu.Meguro.Meguro",
+      "Tokyu.Meguro.MusashiKosugi": "Tokyu.Meguro.Meguro",
+    }
+  },
+  "Toei.Shinjuku.Shinjuku": {
+    "Toei.Local": {
+      "Keio.Keio.Sakurajosui": "Keio.KeioNew.Shinjuku",
+      "Keio.Sagamihara.Wakabadai": "Keio.KeioNew.Shinjuku",
+      "Keio.KeioNew.Sasazuka": "Keio.KeioNew.Shinjuku",
+      "Keio.Sagamihara.Hashimoto": "Keio.KeioNew.Shinjuku",
+      "Keio.Keio.Chofu": "Keio.KeioNew.Shinjuku",
+      "Keio.Sagamihara.KeioTamaCenter": "Keio.KeioNew.Shinjuku",
+      "Keio.Takao.Takaosanguchi": "Keio.KeioNew.Shinjuku",
+    },
+    "Toei.Express": {
+      "Keio.KeioNew.Sasazuka": "Keio.KeioNew.Shinjuku",
+      "Keio.Sagamihara.KeioTamaCenter": "Keio.KeioNew.Shinjuku",
+      "Keio.Sagamihara.Hashimoto": "Keio.KeioNew.Shinjuku",
+      "Keio.Takao.Takaosanguchi": "Keio.KeioNew.Shinjuku",
+    }
+  },
+  "TokyoMetro.Chiyoda.OmoteSando": {
+    "TokyoMetro.LimitedExpress": {
+      "Odakyu.Odawara.HonAtsugi": null,
+      "HakoneTozan.HakoneTozan.HakoneYumoto": null
+    }
+  },
+  "TokyoMetro.Chiyoda.YoyogiUehara": {
+    "TokyoMetro.SemiExpress": {
+      "Odakyu.Odawara.SeijogakuenMae": null,
+      "Odakyu.Odawara.MukogaokaYuen": null,
+      "Odakyu.Odawara.HonAtsugi": null,
+      "Odakyu.Odawara.Isehara": null
+    },
+    "TokyoMetro.Local": {
+      "Odakyu.Odawara.SeijogakuenMae": null,
+      "Odakyu.Odawara.SagamiOno": null,
+      "Odakyu.Odawara.HonAtsugi": null,
+      "Odakyu.Odawara.MukogaokaYuen": null
+    },
+    "TokyoMetro.Express": {
+      "Odakyu.Odawara.MukogaokaYuen": null,
+      "Odakyu.Odawara.Isehara": null,
+      "Odakyu.Odawara.SeijogakuenMae": null,
+      "Odakyu.Odawara.HonAtsugi": null,
+      "Odakyu.Tama.Karakida": null
+    }
+  },
   "TokyoMetro.Fukutoshin.Ikebukuro": {
     "Seibu.S-TRAIN": {
-      "Minatomirai.Minatomirai.MotomachiChukagai": "TokyoMetro.Fukutoshin.Ikebukuro"
+      "Minatomirai.Minatomirai.MotomachiChukagai": "TokyoMetro.Fukutoshin.Ikebukuro",
+    },
+    "TokyoMetro.S-TRAIN": {
+      "Seibu.Ikebukuro.Tokorozawa": "TokyoMetro.Fukutoshin.Ikebukuro",
+      "Seibu.Ikebukuro.Hanno": "TokyoMetro.Fukutoshin.Ikebukuro",
+      "Seibu.SeibuChichibu.SeibuChichibu": "TokyoMetro.Fukutoshin.Ikebukuro"
+    }
+  },
+  "TokyoMetro.Fukutoshin.KotakeMukaihara": {
+    "TokyoMetro.Local": {
+      "Seibu.Ikebukuro.Hoya": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.ShakujiiKoen": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Kotesashi": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Kiyose": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Tokorozawa": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Hanno": "Seibu.SeibuYurakucho.KotakeMukaihara"
+    },
+    "TokyoMetro.Express": {
+      "Seibu.Ikebukuro.Hanno": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Hoya": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Tokorozawa": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Kotesashi": "Seibu.SeibuYurakucho.KotakeMukaihara"
+    },
+    "TokyoMetro.CommuterExpress": {
+      "Seibu.Ikebukuro.Kotesashi": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Hanno": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Kiyose": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Tokorozawa": "Seibu.SeibuYurakucho.KotakeMukaihara"
+    },
+    "TokyoMetro.F-Liner": {
+      "Seibu.Ikebukuro.Hanno": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Kotesashi": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Tokorozawa": "Seibu.SeibuYurakucho.KotakeMukaihara"
+    }
+  },
+  "TokyoMetro.Fukutoshin.Shibuya": {
+    "TokyoMetro.Local": {
+      "Tokyu.Toyoko.Motosumiyoshi": "Tokyu.Toyoko.Shibuya",
+      "Tokyu.Toyoko.MusashiKosugi": "Tokyu.Toyoko.Shibuya",
+      "Tokyu.Toyoko.Kikuna": "Tokyu.Toyoko.Shibuya",
+      "Tokyu.Toyoko.Yokohama": "Tokyu.Toyoko.Shibuya",
+      "Minatomirai.Minatomirai.MotomachiChukagai": "Tokyu.Toyoko.Shibuya",
+    },
+    "TokyoMetro.CommuterExpress": {
+      "Minatomirai.Minatomirai.MotomachiChukagai": "Tokyu.Toyoko.Shibuya",
+    },
+    "TokyoMetro.Express": {
+      "Minatomirai.Minatomirai.MotomachiChukagai": "Tokyu.Toyoko.Shibuya",
+    },
+    "TokyoMetro.S-TRAIN": {
+      "Minatomirai.Minatomirai.MotomachiChukagai": "Tokyu.Toyoko.Shibuya",
+    },
+    "TokyoMetro.F-Liner": {
+      "Minatomirai.Minatomirai.MotomachiChukagai": "Tokyu.Toyoko.Shibuya",
+    }
+  },
+  "TokyoMetro.Fukutoshin.Wakoshi": {
+    "TokyoMetro.CommuterExpress": {
+      "Tobu.Tojo.ShinrinKoen": null,
+      "Tobu.Tojo.Kawagoeshi": null,
+      "Tobu.Tojo.Shiki": null,
+    },
+    "TokyoMetro.Local": {
+      "Tobu.Tojo.ShinrinKoen": null,
+      "Tobu.Tojo.Shiki": null,
+      "Tobu.Tojo.Kawagoeshi": null,
+    },
+    "TokyoMetro.Express": {
+      "Tobu.Tojo.ShinrinKoen": null,
+      "Tobu.Tojo.Kawagoeshi": null,
+      "Tobu.Tojo.Ogawamachi": null,
+    },
+    "TokyoMetro.F-Liner": {
+      "Tobu.Tojo.ShinrinKoen": null,
+    }
+  },
+  "TokyoMetro.Hanzomon.Oshiage": {
+    "TokyoMetro.SemiExpress": {
+      "Tobu.TobuSkytree.KitaKoshigaya": null,
+      "Tobu.Nikko.MinamiKurihashi": null,
+      "Tobu.Isesaki.Kuki": null,
+      "Tobu.TobuSkytree.TobuDobutsuKoen": null,
+    },
+    "TokyoMetro.Express": {
+      "Tobu.Nikko.MinamiKurihashi": null,
+      "Tobu.Isesaki.Kuki": null,
+      "Tobu.TobuSkytree.TobuDobutsuKoen": null,
+    }
+  },
+  "TokyoMetro.Hanzomon.Shibuya": {
+    "TokyoMetro.Local": {
+      "Tokyu.DenEnToshi.Saginuma": "Tokyu.DenEnToshi.Shibuya",
+      "Tokyu.DenEnToshi.Nagatsuta": "Tokyu.DenEnToshi.Shibuya",
+      "Tokyu.DenEnToshi.ChuoRinkan": "Tokyu.DenEnToshi.Shibuya",
+    },
+    "TokyoMetro.SemiExpress": {
+      "Tokyu.DenEnToshi.Nagatsuta": "Tokyu.DenEnToshi.Shibuya",
+      "Tokyu.DenEnToshi.ChuoRinkan": "Tokyu.DenEnToshi.Shibuya",
+    },
+    "TokyoMetro.Express": {
+      "Tokyu.DenEnToshi.ChuoRinkan": "Tokyu.DenEnToshi.Shibuya",
+      "Tokyu.DenEnToshi.Nagatsuta": "Tokyu.DenEnToshi.Shibuya",
+    }
+  },
+  "TokyoMetro.Hibiya.KitaSenju": {
+    "TokyoMetro.Local": {
+      "Tobu.TobuSkytree.Takenotsuka": null,
+      "Tobu.TobuSkytree.KitaKoshigaya": null,
+      "Tobu.TobuSkytree.KitaKasukabe": null,
+      "Tobu.TobuSkytree.TobuDobutsuKoen": null,
+      "Tobu.Nikko.MinamiKurihashi": null
+    }
+  },
+  "TokyoMetro.Hibiya.Ueno": {
+    "TokyoMetro.TH-LINER": {
+      "Tobu.Isesaki.Kuki": null
+    }
+  },
+  "TokyoMetro.Namboku.AkabaneIwabuchi": {
+    "TokyoMetro.Local": {
+      "SaitamaRailway.SaitamaRailway.UrawaMisono": null,
+      "SaitamaRailway.SaitamaRailway.Hatogaya": null,
+    }
+  },
+  "TokyoMetro.Namboku.Meguro": {
+    "TokyoMetro.Local": {
+      "Tokyu.Meguro.Okusawa": "Tokyu.Meguro.Meguro",
+      "Tokyu.Meguro.MusashiKosugi": "Tokyu.Meguro.Meguro",
+      "Tokyu.Meguro.Hiyoshi": "Tokyu.Meguro.Meguro",
+    },
+    "TokyoMetro.Express": {
+      "Tokyu.Meguro.Hiyoshi": "Tokyu.Meguro.Meguro",
+      "Tokyu.Meguro.MusashiKosugi": "Tokyu.Meguro.Meguro",
+    }
+  },
+  "TokyoMetro.Tozai.NishiFunabashi": {
+    "TokyoMetro.Local": {
+      "ToyoRapid.ToyoRapid.ToyoKatsutadai": null,
+      "ToyoRapid.ToyoRapid.YachiyoMidorigaoka": null,
+    },
+    "TokyoMetro.Rapid": {
+      "ToyoRapid.ToyoRapid.ToyoKatsutadai": null,
     }
   },
   "TokyoMetro.Yurakucho.Iidabashi": {
     "Seibu.S-TRAIN": {
-      "TokyoMetro.Yurakucho.Toyosu": "TokyoMetro.Yurakucho.Iidabashi"
+      "TokyoMetro.Yurakucho.Toyosu": "TokyoMetro.Yurakucho.Iidabashi",
+    },
+    "TokyoMetro.S-TRAIN": {
+      "Seibu.Ikebukuro.Kotesashi": "TokyoMetro.Yurakucho.Iidabashi"
+    }
+  },
+  "TokyoMetro.Yurakucho.KotakeMukaihara": {
+    "TokyoMetro.Local": {
+      "Seibu.Ikebukuro.Hoya": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Kotesashi": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Kiyose": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Hanno": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.ShakujiiKoen": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Tokorozawa": "Seibu.SeibuYurakucho.KotakeMukaihara",
+    },
+    "TokyoMetro.SemiExpress": {
+      "Seibu.Ikebukuro.Kotesashi": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Hanno": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Hoya": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Tokorozawa": "Seibu.SeibuYurakucho.KotakeMukaihara",
+    },
+    "TokyoMetro.Rapid": {
+      "Seibu.Ikebukuro.Hanno": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Kotesashi": "Seibu.SeibuYurakucho.KotakeMukaihara",
+    },
+    "TokyoMetro.RapidExpress": {
+      "Seibu.Ikebukuro.Hanno": "Seibu.SeibuYurakucho.KotakeMukaihara",
+      "Seibu.Ikebukuro.Kotesashi": "Seibu.SeibuYurakucho.KotakeMukaihara",
+    }
+  },
+  "TokyoMetro.Yurakucho.Wakoshi": {
+    "TokyoMetro.Local": {
+      "Tobu.Tojo.ShinrinKoen": null,
+      "Tobu.Tojo.Kawagoeshi": null,
+      "Tobu.Tojo.Shiki": null
     }
   },
   "Tokyu.DenEnToshi.Shibuya": {
@@ -737,5 +1133,20 @@ export const finalConnections: Record<string, Record<string, Record<string, stri
       "Seibu.Ikebukuro.Tokorozawa": "TokyoMetro.Fukutoshin.Shibuya",
       "Seibu.SeibuChichibu.SeibuChichibu": "TokyoMetro.Fukutoshin.Shibuya",
     }
-  }
+  },
+  "TWR.Rinkai.Osaki": {
+    "TWR.Local": {
+      "JR-East.SaikyoKawagoe.Kawagoe": "JR-East.SaikyoKawagoe.Osaki",
+      "JR-East.SaikyoKawagoe.Omiya": "JR-East.SaikyoKawagoe.Osaki",
+      "JR-East.SaikyoKawagoe.Akabane": "JR-East.SaikyoKawagoe.Osaki",
+      "JR-East.SaikyoKawagoe.MusashiUrawa": "JR-East.SaikyoKawagoe.Osaki",
+      "JR-East.SaikyoKawagoe.Ikebukuro": "JR-East.SaikyoKawagoe.Osaki",
+    },
+    "TWR.CommuterRapid": {
+      "JR-East.SaikyoKawagoe.Kawagoe": "JR-East.SaikyoKawagoe.Osaki",
+    },
+    "TWR.Rapid": {
+      "JR-East.SaikyoKawagoe.Kawagoe": "JR-East.SaikyoKawagoe.Osaki",
+    }
+  },
 }

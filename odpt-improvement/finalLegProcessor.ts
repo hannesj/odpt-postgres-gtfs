@@ -105,6 +105,7 @@ export async function processFinalStations(
                     for (const finalLeg of groupedRows) {
                       const connectingStation = finalConnections[finalLeg.station]?.[finalLeg.trainType]?.[finalLeg.destinationStations];
                       if (connectingStation === undefined) {
+                        console.log(`Missing final connection ${finalLeg.station}_${finalLeg.trainType}_${finalLeg.destinationStations}`)
                         missingFinalConnections.add(
                           `${finalLeg.station}_${finalLeg.trainType}_${finalLeg.destinationStations}`
                         );

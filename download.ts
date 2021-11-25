@@ -58,7 +58,7 @@ export async function download(): Promise<string> {
     await downloadFeed(feed, directory)
   }
 
-  return directory
+  return version
 }
 
 Deno.stdout.write(encoder.encode(await download()))

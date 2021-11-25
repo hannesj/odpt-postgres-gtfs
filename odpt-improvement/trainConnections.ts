@@ -390,6 +390,10 @@ export const nextStopConnections: Record<string, Record<string, Record<string, s
     "Keio.SemiExpress": {
       "Toei.Shinjuku.Motoyawata": "Keio.Keio.Sasazuka",
       "Toei.Shinjuku.Ojima": "Keio.Keio.Sasazuka"
+    },
+    "Keio.KeioLiner": {
+      "Keio.Sagamihara.Hashimoto": "Keio.Sagamihara.KeioNagayama",
+      "Keio.Takao.Takaosanguchi": "Keio.Takao.Takaosanguchi"
     }
   },
   "Keio.Keio.Shinjuku": {

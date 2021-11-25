@@ -27,7 +27,22 @@
 	"launch": {
 		"version": "0.2.0",
 		"configurations": [
-
+			{
+				"request": "launch",
+				"name": "Launch current file",
+				"type": "pwa-node",
+				"program": "${file}",
+				"cwd": "${workspaceFolder}",
+				"runtimeExecutable": "deno",
+				"runtimeArgs": [
+					"run",
+					"--unstable",
+					"--inspect",
+					"--allow-all"
+				],
+				"attachSimplePort": 9229,
+				"customDescriptionGenerator": "this.inspect ? this.inspect() : defaultValue"
+			},
 			{
 				"request": "launch",
 				"name": "Launch Generate Timetables",

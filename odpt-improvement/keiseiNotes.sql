@@ -1,35 +1,49 @@
 
 UPDATE odpt.station_timetable_object
-SET note = 'ja=>"青砥に止まりません"'
+SET note = 'ja=>"青砥に止まる"'
 WHERE 
   station_timetable = 'Keisei.Main.KeiseiUeno.Outbound.Weekday'
   and destination_station = '{Keisei.NaritaSkyAccess.NaritaAirportTerminal1}'
   and train_type = 'Keisei.Skyliner'
-  and departure_time in ('05:40:00', '08:20:00', '09:40:00', '11:00:00', '12:20:00', '13:40:00', '15:00:00', '16:20:00', '17:40:00');
+  and departure_time in ('06:00:00', '06:20:00', '06:40:00', '07:00:00', '07:20:00', '07:40:00', '09:00:00', '10:20:00', '11:40:00', '13:00:00', '14:20:00', '15:40:00', '17:00:00', '19:00:00');
 
 UPDATE odpt.station_timetable_object
-SET note = 'ja=>"青砥に止まりません"'
+SET note = 'ja=>"青砥に止まる"'
 WHERE 
   station_timetable = 'Keisei.Main.Nippori.Outbound.Weekday'
   and destination_station = '{Keisei.NaritaSkyAccess.NaritaAirportTerminal1}'
   and train_type = 'Keisei.Skyliner'
-  and departure_time in ('05:45:00', '08:25:00', '09:45:00', '11:05:00', '12:25:00', '13:45:00', '15:05:00', '16:25:00', '17:45:00');
+  and departure_time in ('06:05:00', '06:25:00', '06:45:00', '07:05:00', '07:25:00', '07:45:00', '09:05:00', '10:25:00', '11:45:00', '13:05:00', '14:25:00', '15:45:00', '17:05:00', '19:05:00');
 
 UPDATE odpt.station_timetable_object
-SET note = 'ja=>"青砥に止まりません"'
+SET note = 'ja=>"青砥に止まる"'
 WHERE 
   station_timetable = 'Keisei.Main.KeiseiUeno.Outbound.SaturdayHoliday'
   and destination_station = '{Keisei.NaritaSkyAccess.NaritaAirportTerminal1}'
   and train_type = 'Keisei.Skyliner'
-  and departure_time in ('05:40:00', '08:20:00', '09:40:00', '11:00:00', '12:20:00', '13:40:00', '15:00:00', '16:20:00', '17:40:00');
+  and departure_time in ('06:00:00', '06:20:00', '06:40:00', '07:00:00', '07:20:00', '07:40:00', '09:00:00', '10:20:00', '11:40:00', '13:00:00', '14:20:00', '15:40:00', '17:00:00', '19:00:00');
 
 UPDATE odpt.station_timetable_object
-SET note = 'ja=>"青砥に止まりません"'
+SET note = 'ja=>"青砥に止まる"'
 WHERE 
   station_timetable = 'Keisei.Main.Nippori.Outbound.SaturdayHoliday'
   and destination_station = '{Keisei.NaritaSkyAccess.NaritaAirportTerminal1}'
   and train_type = 'Keisei.Skyliner'
-  and departure_time in ('05:45:00', '08:25:00', '09:45:00', '11:05:00', '12:25:00', '13:45:00', '15:05:00', '16:25:00', '17:45:00');
+  and departure_time in ('06:05:00', '06:25:00', '06:45:00', '07:05:00', '07:25:00', '07:45:00', '09:05:00', '10:25:00', '11:45:00', '13:05:00', '14:25:00', '15:45:00', '17:05:00', '19:05:00');
+
+UPDATE odpt.station_timetable_object
+SET note = 'ja=>"青砥に止まる"'
+WHERE 
+  station_timetable = 'Keisei.Main.Aoto.Outbound.Weekday'
+  and destination_station = '{Keisei.NaritaSkyAccess.NaritaAirportTerminal1}'
+  and train_type = 'Keisei.Skyliner';
+
+UPDATE odpt.station_timetable_object
+SET note = 'ja=>"青砥に止まる"'
+WHERE 
+  station_timetable = 'Keisei.Main.Aoto.Outbound.SaturdayHoliday'
+  and destination_station = '{Keisei.NaritaSkyAccess.NaritaAirportTerminal1}'
+  and train_type = 'Keisei.Skyliner';
 
 
 

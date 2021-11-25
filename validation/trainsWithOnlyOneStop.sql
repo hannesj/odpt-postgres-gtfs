@@ -12,3 +12,11 @@ group by train_timetable,
   train_timetable.previous_train_timetable,
   train_timetable.destination_station
 having count(i) = 1;
+
+-- @block Find trips with only a single stop
+
+select tt.*, tto.*
+from odpt.train_timetable tt
+inner join odpt.train_timetable_max_index maxindex on tt.id = maxindex.id
+inner join odpt.train_timetable_min_index minindex on tt.id = minindex.id and maxindex.i = minindex.i
+inner join odpt.train_timetable_object tto on tt.id = tto.train_timetable and tto.i = maxindex.i

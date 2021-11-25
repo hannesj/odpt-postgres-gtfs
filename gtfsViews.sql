@@ -56,7 +56,7 @@ GROUP BY c.id
 ORDER BY service_id;
 
 
-CREATE OR REPLACE VIEW gtfs.route AS
+CREATE OR REPLACE VIEW gtfs.routes AS
 SELECT r.id as route_id,
        r.operator as agency_id,
        r.line_code as route_short_name,
@@ -83,7 +83,7 @@ GROUP BY brp.busroute, brp.operator
 ORDER BY route_id;
 
 
-CREATE OR REPLACE VIEW gtfs.stop AS
+CREATE OR REPLACE VIEW gtfs.stops AS
 SELECT s.id as stop_id,
        s.title as stop_name,
        s.station_code as stop_code,
@@ -109,7 +109,17 @@ GROUP BY bp.id
 ORDER BY stop_id;
 
 
-CREATE OR REPLACE VIEW gtfs.shape AS
+CREATE TABLE IF NOT EXISTS gtfs.shapes_manual (
+  shape_id text NOT NULL,
+  shape_pt_lat numeric(7, 5) NOT NULL,
+  shape_pt_lon numeric(8, 5) NOT NULL,
+  shape_pt_sequence integer NOT NULL,
+  PRIMARY KEY (shape_id, shape_pt_sequence)
+);
+
+DELETE FROM gtfs.shapes_manual;
+
+CREATE OR REPLACE VIEW gtfs.shapes AS
 SELECT (so.railway || '.' || ascending_rail_direction) as shape_id,
        ST_Y(location::geometry) as shape_pt_lat,
        ST_X(location::geometry) as shape_pt_lon,
@@ -119,6 +129,9 @@ LEFT JOIN odpt.railway r on so.railway = r.id
 LEFT JOIN odpt.station s on station = s.id
 where ascending_rail_direction is not null
   and location is not null
+  and so.railway || '.' || ascending_rail_direction not in (
+    select distinct shape_id from gtfs.shapes_manual
+  )
 UNION
 SELECT so.railway || '.' || descending_rail_direction as shape_id,
        ST_Y(location::geometry) as shape_pt_lat,
@@ -129,25 +142,39 @@ LEFT JOIN odpt.railway r on so.railway = r.id
 LEFT JOIN odpt.station s on station = s.id
 where descending_rail_direction is not null
   and location is not null
-ORDER BY shape_id;
+  and so.railway || '.' || descending_rail_direction not in (
+    select distinct shape_id from gtfs.shapes_manual
+  )
+UNION
+SELECT shape_id,
+       shape_pt_lat,
+       shape_pt_lon,
+       shape_pt_sequence
+FROM gtfs.shapes_manual
+ORDER BY shape_id, shape_pt_sequence;
 
 
-CREATE OR REPLACE VIEW gtfs.trip AS
+CREATE OR REPLACE VIEW gtfs.trips AS
 SELECT tt.railway as route_id,
        tt.calendar as service_id,
        tt.id as trip_id,
-       odpt.train_type.title || ' ' || array_to_string(array_agg(s.title), '/') || '行き' as trip_headsign,
+       odpt.train_type.title || ' ' || array_to_string(array_agg(distinct s.title), '/') || '行き' as trip_headsign,
        case 
          when r.ascending_rail_direction = rd.id then 0
          when r.descending_rail_direction = rd.id then 1
          else null
        end as direction_id,
-       tt.railway || '.' || rd.id as shape_id
+       tt.railway || '.' || rd.id || array_to_string(array_agg('_a_' || tto.arrival_station), '') || array_to_string(array_agg('_d_' || tto.departure_station), '') as shape_id
 FROM odpt.train_timetable tt
 LEFT JOIN odpt.train_type on tt.train_type = odpt.train_type.id
 LEFT JOIN odpt.rail_direction rd on tt.rail_direction = rd.id
 LEFT JOIN odpt.railway r on tt.railway = r.id
 LEFT JOIN odpt.station s on s.id = any(destination_station)
+LEFT JOIN odpt.train_timetable_object tto 
+  on tt.id = tto.train_timetable and (
+    COALESCE(tto.arrival_station, tto.departure_station) not LIKE (r.id || '.%') or
+    COALESCE(tto.arrival_station, tto.departure_station) = 'JR-East.Keiyo.NishiFunabashi'
+  )
 GROUP BY tt.id, odpt.train_type.id, r.id, rd.id
 UNION
 SELECT brp.busroute as route_id,
@@ -165,11 +192,10 @@ AND bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
 GROUP BY bt.id, brp.id
 ORDER BY trip_id;
 
--- @block
-CREATE OR REPLACE VIEW gtfs.stop_time AS
+CREATE OR REPLACE VIEW gtfs.stop_times AS
 SELECT tto.train_timetable as trip_id,
-       tto.arrival_time as arrival_time,
-       tto.departure_time as departure_time,
+       COALESCE(tto.arrival_time, tto.departure_time) as arrival_time,
+       COALESCE(tto.departure_time, tto.arrival_time) as departure_time,
        COALESCE(tto.arrival_station, tto.departure_station) as stop_id,
        tto.i as stop_sequence,
        case when tto.departure_time is null then 1 else null end as pickup_type,
@@ -179,8 +205,8 @@ FROM odpt.train_timetable_object tto
 GROUP BY tto.train_timetable, tto.i
 UNION
 SELECT bto.bus_timetable as trip_id,
-       bto.arrival_time as arrival_time,
-       bto.departure_time as departure_time,
+       COALESCE(bto.arrival_time, bto.departure_time) as arrival_time,
+       COALESCE(bto.departure_time, bto.arrival_time) as departure_time,
        bto.busstop_pole as stop_id,
        bto.i as stop_sequence,
        case when bto.can_get_on = true then 0 when bto.can_get_on = false or (bt.operator != 'TokyuBus' and bto.departure_time is null) then 1 else null end as pickup_type,
@@ -194,8 +220,7 @@ AND bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
 GROUP BY bto.bus_timetable, bto.i, bt.operator
 ORDER BY trip_id, stop_sequence;
 
--- @block
-CREATE OR REPLACE VIEW gtfs.transfer AS
+CREATE OR REPLACE VIEW gtfs.transfers AS
 SELECT DISTINCT ON (tt.id, to_trip_id)
        COALESCE(tt1.arrival_station, tt1.departure_station) as from_stop_id,
        COALESCE(tt2.departure_station, tt2.arrival_station) as to_stop_id,

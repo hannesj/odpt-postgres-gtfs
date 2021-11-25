@@ -34,6 +34,7 @@ function toHstore(o: OdptTitle | OdptNote | Titile ): string {
 }
 
 async function importOperators(feed: string, transaction: Transaction) {
+  console.log("Importing operators")
   for await (const s of streamingParser(`data/${feed}/Operator.json`)) {
     const operator = Convert.toOperator(s);
     const id = getOperatorId(operator.owlSameAs);
@@ -50,6 +51,7 @@ async function importOperators(feed: string, transaction: Transaction) {
 }
 
 async function importCalendars(feed: string, transaction: Transaction) {
+  console.log("Importing calendars")
   for await (const s of streamingParser(`data/${feed}/Calendar.json`)) {
     const obj = Convert.toCalendar(s);
     const id = getCalendarId(obj.owlSameAs);
@@ -78,6 +80,7 @@ async function importCalendars(feed: string, transaction: Transaction) {
 }
 
 async function importAirports(feed: string, transaction: Transaction) {
+  console.log("Importing airports")
   for await (const s of streamingParser(`data/${feed}/Airport.json`)) {
     const obj = Convert.toAirport(s);
     const id = getAirportId(obj.owlSameAs);
@@ -94,6 +97,7 @@ async function importAirports(feed: string, transaction: Transaction) {
 }
 
 async function importAirportTerminals(feed: string, transaction: Transaction) {
+  console.log("Importing airport terminals")
   for await (const s of streamingParser(`data/${feed}/AirportTerminal.json`)) {
     const obj = Convert.toAirportTerminal(s);
     const id = getAirportTerminalId(obj.owlSameAs);
@@ -111,6 +115,7 @@ async function importAirportTerminals(feed: string, transaction: Transaction) {
 }
 
 async function importBusstopPoles(feed: string, transaction: Transaction) {
+  console.log("Importing busstop poles")
   for await (const s of streamingParser(`data/${feed}/BusstopPole.json`)) {
     const obj = Convert.toBusstopPole(s);
     const id = getBusstopPoleId(obj.owlSameAs);
@@ -140,6 +145,7 @@ async function importBusstopPoles(feed: string, transaction: Transaction) {
 }
 
 async function importBusroutePatterns(feed: string, transaction: Transaction) {
+  console.log("Importing busroute patterns")
   for await (const s of streamingParser(`data/${feed}/BusroutePattern.json`)) {
     const obj = Convert.toBusroutePattern(s);
     const id = getBusroutePatternId(obj.owlSameAs);
@@ -189,6 +195,7 @@ async function importBusroutePatterns(feed: string, transaction: Transaction) {
 }
 
 async function importBusTimetables(feed: string, transaction: Transaction) {
+  console.log("Importing bus timetables")
   for await (const s of streamingParser(`data/${feed}/BusTimetable.json`)) {
     const obj = Convert.toBusTimetable(s);
     const id = getBusTimetableId(obj.owlSameAs);
@@ -227,6 +234,7 @@ async function importBusTimetables(feed: string, transaction: Transaction) {
 }
 
 async function importBusroutePatternFares(feed: string, transaction: Transaction) {
+  console.log("Importing busroute pattern fares")
   for await (const s of streamingParser(
     `data/${feed}/BusroutePatternFare.json`
   )) {
@@ -258,6 +266,7 @@ async function importBusroutePatternFares(feed: string, transaction: Transaction
 }
 
 async function importBusstopPoleTimetables(feed: string, transaction: Transaction) {
+  console.log("Importing busstop pole timetables")
   for await (const s of streamingParser(
     `data/${feed}/BusstopPoleTimetable.json`
   )) {
@@ -314,6 +323,7 @@ async function importBusstopPoleTimetables(feed: string, transaction: Transactio
 }
 
 async function importFlightSchedules(feed: string, transaction: Transaction) {
+  console.log("Importing flight schedules")
   for await (const s of streamingParser(`data/${feed}/FlightSchedule.json`)) {
     const obj = Convert.toFlightSchedule(s);
     const id = getFlightScheduleId(obj.owlSameAs);
@@ -354,6 +364,7 @@ async function importFlightSchedules(feed: string, transaction: Transaction) {
 }
 
 async function importFlightStatus(feed: string, transaction: Transaction) {
+  console.log("Importing flight status")
   for await (const s of streamingParser(`data/${feed}/FlightStatus.json`)) {
     const obj = Convert.toFlightStatus(s);
     const id = getFlightStatusId(obj.owlSameAs);
@@ -370,6 +381,7 @@ async function importFlightStatus(feed: string, transaction: Transaction) {
 }
 
 async function importPassengerSurveys(feed: string, transaction: Transaction) {
+  console.log("Importing passenger surveys")
   for await (const s of streamingParser(`data/${feed}/PassengerSurvey.json`)) {
     const obj = Convert.toPassengerSurvey(s);
     const id = getPassengerSurveyId(obj.owlSameAs);
@@ -389,6 +401,7 @@ async function importPassengerSurveys(feed: string, transaction: Transaction) {
 }
 
 async function importRailDirections(feed: string, transaction: Transaction) {
+  console.log("Importing rail directions")
   for await (const s of streamingParser(`data/${feed}/RailDirection.json`)) {
     const obj = Convert.toRailDirection(s);
     const id = getRailDirectionId(obj.owlSameAs);
@@ -406,6 +419,7 @@ async function importRailDirections(feed: string, transaction: Transaction) {
 }
 
 async function importTrainTypes(feed: string, transaction: Transaction) {
+  console.log("Importing train types")
   for await (const s of streamingParser(`data/${feed}/TrainType.json`)) {
     const obj = Convert.toTrainType(s);
     const id = getTrainTypeId(obj.owlSameAs);
@@ -423,6 +437,7 @@ async function importTrainTypes(feed: string, transaction: Transaction) {
 }
 
 async function importRailways(feed: string, transaction: Transaction) {
+  console.log("Importing railways")
   for await (const s of streamingParser(`data/${feed}/Railway.json`)) {
     const obj = Convert.toRailway(s);
     const id = getRailwayId(obj.owlSameAs);
@@ -452,6 +467,7 @@ async function importRailways(feed: string, transaction: Transaction) {
 }
 
 async function importStations(feed: string, transaction: Transaction) {
+  console.log("Importing stations")
   for await (const s of streamingParser(`data/${feed}/Station.json`)) {
     const obj = Convert.toStation(s);
     const id = getStationId(obj.owlSameAs);
@@ -477,6 +493,7 @@ async function importStations(feed: string, transaction: Transaction) {
 }
 
 async function importStationOrders(feed: string, transaction: Transaction) {
+  console.log("Importing station orders")
   for await (const s of streamingParser(`data/${feed}/Railway.json`)) {
     const obj = Convert.toRailway(s);
     const id = getRailwayId(obj.owlSameAs);
@@ -496,6 +513,7 @@ async function importStationOrders(feed: string, transaction: Transaction) {
 }
 
 async function importRailwayFares(feed: string, transaction: Transaction) {
+  console.log("Importing railway fares")
   for await (const s of streamingParser(`data/${feed}/RailwayFare.json`)) {
     const obj = Convert.toRailwayFare(s);
     const id = getRailwayFareId(obj.owlSameAs);
@@ -522,6 +540,7 @@ async function importRailwayFares(feed: string, transaction: Transaction) {
 }
 
 async function importStationTimetables(feed: string, transaction: Transaction) {
+  console.log("Importing station timetables")
   for await (const s of streamingParser(`data/${feed}/StationTimetable.json`)) {
     const obj = Convert.toStationTimetable(s);
     const id = getStationTimetableId(obj.owlSameAs);
@@ -573,6 +592,7 @@ async function importStationTimetables(feed: string, transaction: Transaction) {
 }
 
 async function importTrainTimetables(feed: string, transaction: Transaction) {
+  console.log("Importing train timetables")
   for await (const s of streamingParser(`data/${feed}/TrainTimetable.json`)) {
     const obj = Convert.toTrainTimetable(s);
     const id = getTrainTimetableId(obj.owlSameAs);
@@ -625,7 +645,7 @@ async function importTrainTimetables(feed: string, transaction: Transaction) {
   }
 }
 
-const feed = "2021-10-16T20:29:56.063Z" //Deno.env.get("ODPT_DATA_VERSION");
+const feed = Deno.env.get("ODPT_DATA_VERSION");
 
 if (!feed) {
   throw new Error("ODPT_DATA_VERSION is not defined");

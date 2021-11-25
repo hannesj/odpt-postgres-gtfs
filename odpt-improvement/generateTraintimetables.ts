@@ -403,7 +403,7 @@ for (const missing of missingFinals) {
   missingOutput[a][c][b] = -1;
 }
 
-Deno.writeTextFile("missingFinals.txt", JSON.stringify(missingOutput, null, 2));
+// Deno.writeTextFile("missingFinals.txt", JSON.stringify(missingOutput, null, 2));
 
 
 const missingConnectionsOutput: Record<
@@ -423,7 +423,7 @@ for (const missing of missingFinalConnections) {
 }
 
 
-Deno.writeTextFile("missingFinalConnections.txt", JSON.stringify(missingConnectionsOutput, null, 2));
+// Deno.writeTextFile("missingFinalConnections.txt", JSON.stringify(missingConnectionsOutput, null, 2));
 
 
 
