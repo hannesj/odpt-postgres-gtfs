@@ -1,5 +1,5 @@
 #!/bin/bash
-TABLES="agency calendar routes shapes stops trips stop_times transfers"
+TABLES="agency calendar calendar_dates routes shapes stops trips stop_times transfers translations"
 
 # This script takes two arguments: 
 # A zip file containing gtfs files, and a schema name (defaults to gtfs)

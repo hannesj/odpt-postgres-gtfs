@@ -13,7 +13,7 @@ psql -d postgres --file=odpt-improvement/updateArrivalTimes1.sql
 deno run --allow-net odpt-improvement/updateArrivalTimes2.ts
 
 psql -d postgres --file=odpt-improvement/shinagawaTrainType.sql
-psql -d postgres --file=odpt-improvement/missingStopTimes.sql
+# psql -d postgres --file=odpt-improvement/missingStopTimes.sql
 psql -d postgres --file=odpt-improvement/keiseiNotes.sql
 psql -d postgres --file=odpt-improvement/keioNotes.sql
 

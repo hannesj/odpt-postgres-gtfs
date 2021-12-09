@@ -18,10 +18,13 @@ FROM (
     ('KokusaiKogyoBus.MettsuXa.5205.10', 35.87049, 139.33299),
     ('KokusaiKogyoBus.KouhokuRikkyouKa.618.10', 35.77836, 139.76908),
     ('KokusaiKogyoBus.UchiMagiKouen.4829.11', 35.82473, 139.60673),
-    ('KokusaiKogyoBus.MinamiKouraiShougakkou.5095.10', 35.8407600, 139.2782642)
-  ) AS new_locations(id, lat, lon) 
+    ('KokusaiKogyoBus.MinamiKouraiShougakkou.5095.10', 35.8407600, 139.2782642),
+    ('SeibuBus.Shimojuku.190261.1', 36.0253014, 139.1022989),
+    ('SeibuBus.Shimojuku.190261.2', 36.0253014, 139.1022989),
+    ('KantoBus.Honchounichoume.2503.2', 35.7089979, 139.5257326)
+  ) AS new_locations(id, lat, lon)
 WHERE
   busstop_pole.id = new_locations.id
-AND
-  location is null;
+--AND
+--  location is null;
 

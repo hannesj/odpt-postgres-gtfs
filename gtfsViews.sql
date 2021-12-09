@@ -34,7 +34,7 @@ LEFT JOIN odpt.busstop_pole bp on bto.busstop_pole = bp.id
 LEFT JOIN odpt.bus_timetable bt on bt.id = bto.bus_timetable
 LEFT JOIN odpt.operator o on o.id = bt.operator
 WHERE bp.location is not NULL
-AND bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
+AND bt.operator not in ('YokohamaMunicipal', 'Toei')
 GROUP BY o.id, o.title
 ORDER BY agency_id;
 
@@ -50,11 +50,17 @@ SELECT c.id as service_id,
        case when c.id in ('Sunday', 'SaturdayHoliday', 'Holiday') then 1 else 0 end as sunday,
        coalesce(to_char(lower(c.duration), 'YYYYMMDD'), '20210101') as start_date,
        coalesce(to_char(upper(c.duration), 'YYYYMMDD'), '20211231') as end_date
-FROM odpt.train_timetable tt
-LEFT JOIN odpt.calendar c on c.id = tt.calendar
-GROUP BY c.id
+FROM odpt.calendar c
+WHERE c.operator IS NULL OR c.operator not in ('YokohamaMunicipal', 'Toei')
 ORDER BY service_id;
 
+CREATE OR REPLACE VIEW gtfs.calendar_dates AS
+SELECT c.id as service_id,
+       to_char(unnest(dates), 'YYYYMMDD') as date,
+       1 as exception_type
+FROM odpt.calendar c
+WHERE c.operator IS NULL OR c.operator not in ('YokohamaMunicipal', 'Toei')
+ORDER BY service_id;
 
 CREATE OR REPLACE VIEW gtfs.routes AS
 SELECT r.id as route_id,
@@ -67,10 +73,10 @@ FROM odpt.train_timetable tt
 LEFT JOIN odpt.railway r on r.id = tt.railway
 GROUP BY r.id
 UNION
-SELECT brp.busroute as route_id,
+SELECT brp.busroute || '.' || brp.pattern as route_id,
        brp.operator as agency_id,
-       gtfs.lcp(distinct brp.title) as route_short_name,
-       null as route_long_name,
+       split_part(trim(gtfs.lcp(distinct brp.title)), ' ', 1) as route_short_name,
+       case when trim(gtfs.lcp(distinct brp.title)) = '' then (array_agg(distinct brp.title))[1] else null end as route_long_name,
        3 as route_type,
        null as route_color -- TODO: Base on agency
 FROM odpt.bus_timetable_object bto
@@ -78,8 +84,9 @@ LEFT JOIN odpt.busstop_pole bp on bto.busstop_pole = bp.id
 LEFT JOIN odpt.bus_timetable bt on bt.id = bto.bus_timetable
 LEFT JOIN odpt.busroute_pattern brp on brp.id = bt.busroute_pattern
 WHERE bp.location is not NULL
-AND bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
-GROUP BY brp.busroute, brp.operator
+AND (bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
+ OR (bt.operator = 'SeibuBus' AND brp.pattern not in (select split_part(regexp_split_to_table(route_id, '/'), '-', 1) from seibu_routes)))
+GROUP BY brp.busroute, brp.operator, brp.pattern
 ORDER BY route_id;
 
 
@@ -103,8 +110,10 @@ SELECT bp.id as stop_id,
 FROM odpt.bus_timetable_object bto
 LEFT JOIN odpt.busstop_pole bp on bto.busstop_pole = bp.id
 LEFT JOIN odpt.bus_timetable bt on bt.id = bto.bus_timetable
+LEFT JOIN odpt.busroute_pattern brp on brp.id = bt.busroute_pattern
 WHERE bp.location is not NULL
-AND bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
+AND (bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
+ OR (bt.operator = 'SeibuBus' AND brp.pattern not in (select split_part(regexp_split_to_table(route_id, '/'), '-', 1) from seibu_routes)))
 GROUP BY bp.id
 ORDER BY stop_id;
 
@@ -177,7 +186,7 @@ LEFT JOIN odpt.train_timetable_object tto
   )
 GROUP BY tt.id, odpt.train_type.id, r.id, rd.id
 UNION
-SELECT brp.busroute as route_id,
+SELECT brp.busroute || '.' || brp.pattern as route_id,
        bt.calendar as service_id,
        bt.id as trip_id,
        (array_agg(distinct destination_sign) filter (where destination_sign is not null) || array_agg(bp.title order by bto.i desc))[1] as trip_headsign,
@@ -188,7 +197,8 @@ LEFT JOIN odpt.busstop_pole bp on bto.busstop_pole = bp.id
 LEFT JOIN odpt.bus_timetable bt on bt.id = bto.bus_timetable
 LEFT JOIN odpt.busroute_pattern brp on brp.id = bt.busroute_pattern
 WHERE bp.location is not NULL
-AND bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
+AND (bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
+ OR (bt.operator = 'SeibuBus' AND brp.pattern not in (select split_part(regexp_split_to_table(route_id, '/'), '-', 1) from seibu_routes)))
 GROUP BY bt.id, brp.id
 ORDER BY trip_id;
 
@@ -215,8 +225,10 @@ SELECT bto.bus_timetable as trip_id,
 FROM odpt.bus_timetable_object bto
 LEFT JOIN odpt.busstop_pole bp on bto.busstop_pole = bp.id
 LEFT JOIN odpt.bus_timetable bt on bt.id = bto.bus_timetable
+LEFT JOIN odpt.busroute_pattern brp on brp.id = bt.busroute_pattern
 WHERE bp.location is not NULL
-AND bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
+AND (bt.operator not in ('SeibuBus', 'YokohamaMunicipal', 'Toei')
+ OR (bt.operator = 'SeibuBus' AND brp.pattern not in (select split_part(regexp_split_to_table(route_id, '/'), '-', 1) from seibu_routes)))
 GROUP BY bto.bus_timetable, bto.i, bt.operator
 ORDER BY trip_id, stop_sequence;
 
@@ -233,3 +245,92 @@ INNER JOIN odpt.train_timetable_object tt2 on tt2.train_timetable = any(tt.next_
 INNER JOIN odpt.train_timetable_min_index mindex on tt2.train_timetable = mindex.id and tt2.i = mindex.i
 GROUP BY tt.id, tt1.train_timetable, tt1.i, tt2.train_timetable, tt2.i
 ORDER BY tt.id, to_trip_id, tt1.i desc;
+
+CREATE OR REPLACE VIEW gtfs.translations AS
+SELECT 'agency'      as table_name,
+       'agency_name' as field_name,
+       o.key         as language,
+       o.value       as translation,
+       o.id          as record_id,
+       null          as record_sub_id
+FROM (
+         SELECT id, (each(translations)).*
+         FROM odpt.operator
+     ) as o
+INNER JOIN gtfs.agency a on a.agency_id = o.id
+UNION
+SELECT 'routes'      as table_name,
+       'route_long_name' as field_name,
+       r.key         as language,
+       r.value       as translation,
+       r.id          as record_id,
+       null          as record_sub_id
+FROM (
+         SELECT id, (each(translations)).*
+         FROM odpt.railway
+     ) as r
+INNER JOIN gtfs.routes g on g.route_id = r.id
+UNION
+SELECT 'stops'      as table_name,
+       'stop_name' as field_name,
+       s.key         as language,
+       s.value       as translation,
+       s.id          as record_id,
+       null          as record_sub_id
+FROM (
+         SELECT id, (each(translations)).*
+         FROM odpt.station
+     ) as s
+INNER JOIN gtfs.stops g on g.stop_id = s.id
+UNION
+SELECT 'stops'      as table_name,
+       'stop_name' as field_name,
+       b.key         as language,
+       b.value       as translation,
+       b.id          as record_id,
+       null          as record_sub_id
+FROM (
+         SELECT id, (each(translations)).*
+         FROM odpt.busstop_pole
+     ) as b
+INNER JOIN gtfs.stops g on g.stop_id = b.id
+UNION
+SELECT 'stops'       as table_name,
+       'stop_name'   as field_name,
+       b.key         as language,
+       trim(b.value) as translation,
+       b.id          as record_id,
+       null          as record_sub_id
+FROM (
+         SELECT id, (each(translations)).*
+         FROM odpt.busstop_pole
+     ) as b
+INNER JOIN gtfs.stops g on g.stop_id = b.id
+WHERE trim(b.value) != ''
+UNION
+SELECT 'trips'         as table_name,
+       'trip_headsign' as field_name,
+       'en'            as language,
+       typ.translations->'en' || ' to ' || array_to_string(array_agg(s.translations->'en'), '/') as translation,
+       tt.id           as record_id,
+       null            as record_sub_id
+FROM odpt.train_timetable tt
+LEFT JOIN odpt.train_type typ on tt.train_type = typ.id
+LEFT JOIN odpt.station s on s.id = any(destination_station)
+INNER JOIN gtfs.trips g on g.trip_id = tt.id
+GROUP BY tt.id, typ.id
+UNION
+SELECT 'trips'         as table_name,
+       'trip_headsign' as field_name,
+       'en'            as language,
+       (array_agg(bp.translations->'en' order by bto.i desc))[1] as translation,
+       bt.id           as record_id,
+       null            as record_sub_id
+FROM odpt.bus_timetable_object bto
+LEFT JOIN odpt.busstop_pole bp on bto.busstop_pole = bp.id
+LEFT JOIN odpt.bus_timetable bt on bt.id = bto.bus_timetable
+LEFT JOIN odpt.busroute_pattern brp on brp.id = bt.busroute_pattern
+INNER JOIN gtfs.trips g on g.trip_id = bt.id
+WHERE bp.location is not NULL
+GROUP BY bt.id, brp.id
+HAVING (array_agg(bp.translations->'en' order by bto.i desc))[1] is not null
